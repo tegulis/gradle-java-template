@@ -1,0 +1,44 @@
+root = true
+
+# Common settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = tab
+indent_style = tab
+insert_final_newline = true
+max_line_length = 120
+# Do not set tab_width, so the tab size can be set by the editor.
+trim_trailing_whitespace = true
+
+# Java and Kotlin files
+[{*.java,*.kts,*.kt}]
+# IntelliJ specific settings
+ij_smart_tabs = true
+ij_java_block_brace_style = end_of_line
+ij_java_class_brace_style = end_of_line
+ij_java_lambda_brace_style = end_of_line
+ij_java_method_brace_style = end_of_line
+ij_java_do_while_brace_force = always
+ij_java_for_brace_force = always
+ij_java_if_brace_force = always
+ij_java_while_brace_force = always
+ij_java_space_before_for_left_brace = true
+ij_java_space_before_for_parentheses = true
+ij_java_space_before_if_left_brace = true
+ij_java_space_before_if_parentheses = true
+ij_java_space_before_switch_left_brace = true
+ij_java_space_before_switch_parentheses = true
+ij_java_space_before_try_left_brace = true
+ij_java_space_before_try_parentheses = true
+ij_java_space_before_while_left_brace = true
+ij_java_space_before_while_parentheses = true
+ij_java_keep_simple_classes_in_one_line = true
+ij_java_keep_simple_lambdas_in_one_line = true
+ij_java_keep_simple_methods_in_one_line = true
+ij_java_blank_lines_after_class_header = 1
+ij_java_blank_lines_before_class_end = 1
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999
+ij_java_packages_to_use_import_on_demand = 999
+ij_java_use_single_class_imports = true
