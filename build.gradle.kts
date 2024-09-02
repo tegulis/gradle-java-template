@@ -6,10 +6,10 @@ plugins {
 }
 
 group = "net.tegulis.template"
-version = "0.1.0"
+version = "0.2.0"
 
 application {
-	mainClass = "net.tegulis.template.main"
+	mainClass = "$group.Main"
 }
 
 java {
