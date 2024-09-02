@@ -34,6 +34,7 @@ dependencies {
 }
 
 tasks.withType<Test> {
+	group = "verification"
 	useJUnitPlatform()
 	enableAssertions = true
 	// Extra settings for very verbose testing
@@ -52,7 +53,6 @@ tasks.withType<Test> {
 	}
 	systemProperty("com.google.common.truth.disable_stack_trace_cleaning", "true")
 	reports.all { required = false }
-	group = "verification"
 }
 
 // Task to pack the application in a flat jar
@@ -76,6 +76,7 @@ tasks.register("flatJar", Jar::class) {
 //	}
 }
 
+// Pack the flatJar and surrounding files into a zip
 tasks.register("packZip", Zip::class) {
 	group = "distribution"
 	dependsOn("flatJar")
