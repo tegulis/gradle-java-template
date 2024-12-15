@@ -9,7 +9,7 @@ group = "net.tegulis.template"
 version = "0.2.0"
 
 application {
-	mainClass = "$group.Main"
+	mainClass = "${project.group}.Main"
 }
 
 java {
@@ -39,19 +39,15 @@ tasks.withType<Test> {
 	enableAssertions = true
 	// Extra settings for very verbose testing
 	testLogging {
-		events = setOf(
-			TestLogEvent.FAILED,
-			TestLogEvent.PASSED,
-			TestLogEvent.SKIPPED,
-			TestLogEvent.STANDARD_ERROR,
-			TestLogEvent.STANDARD_OUT
-		)
+		events = TestLogEvent.values().filter { it != TestLogEvent.STARTED }.toSet()
 		exceptionFormat = TestExceptionFormat.FULL
 		showExceptions = true
 		showCauses = true
 		showStackTraces = true
 	}
+	// Google Truth: don't clean stack traces
 	systemProperty("com.google.common.truth.disable_stack_trace_cleaning", "true")
+	// Don't generate reports
 	reports.all { required = false }
 }
 
