@@ -11,8 +11,8 @@ max_line_length = 120
 # Do not set tab_width, so the tab size can be set by the editor.
 trim_trailing_whitespace = true
 
-# Java and Kotlin files
-[{*.java,*.kts,*.kt}]
+# Java files
+[*.java]
 # IntelliJ specific settings
 ij_smart_tabs = true
 ij_java_block_brace_style = end_of_line
