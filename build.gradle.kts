@@ -1,5 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import java.nio.file.Paths
 
 plugins {
 	application
@@ -7,7 +8,7 @@ plugins {
 }
 
 group = "net.tegulis.template"
-version = "1.0.0"
+version = "1.1.0"
 
 application {
 	mainClass = "${project.group}.Main"
@@ -32,6 +33,30 @@ dependencies {
 	testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher")
 	// Google Truth
 	testImplementation(group = "com.google.truth", name = "truth", version = "1.4.2")
+}
+
+tasks.register("replaceVersion") {
+	group = "other"
+	doFirst {
+		val mainClassPath = application.mainClass
+			                    .get()
+			                    .replace(".", "/") + ".java"
+		for (dir in sourceSets.main.get().java.srcDirs) {
+			val mainClassPathInSourceSet = "${dir}/${mainClassPath}"
+			val mainClassFile = Paths
+				.get(mainClassPathInSourceSet)
+				.toFile()
+			if (mainClassFile.exists()) {
+				val contents = mainClassFile.readText()
+				val modifiedContents = contents.replace(Regex("VERSION\\s*=\\s*\"(.*?)\""), "VERSION = \"${version}\"")
+				mainClassFile.writeText(modifiedContents)
+			}
+		}
+	}
+}
+
+tasks.withType<JavaCompile> {
+	dependsOn("replaceVersion")
 }
 
 tasks.withType<Test> {
