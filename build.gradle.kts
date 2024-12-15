@@ -3,10 +3,11 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
 	application
+	id("com.gradleup.shadow") version "9.0.0-beta4"
 }
 
 group = "net.tegulis.template"
-version = "0.2.0"
+version = "1.0.0"
 
 application {
 	mainClass = "${project.group}.Main"
@@ -51,34 +52,21 @@ tasks.withType<Test> {
 	reports.all { required = false }
 }
 
-// Task to pack the application in a flat jar
-tasks.register("flatJar", Jar::class) {
+tasks.named("shadowJar") {
 	group = "distribution"
-	dependsOn(configurations.runtimeClasspath)
-	manifest {
-		attributes["Main-Class"] = application.mainClass
-	}
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-	from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-	with(tasks.jar.get())
-	destinationDirectory = file("build/distributions/flat")
-	// Copy other files next to the flat jar
-//	doLast {
-//		copy {
-//			from(".")
-//			into(destinationDirectory)
-//			include("assets/**")
-//		}
-//	}
 }
 
-// Pack the flatJar and surrounding files into a zip
+// Pack the shadowJar and asset files into a zip
 tasks.register("packZip", Zip::class) {
 	group = "distribution"
-	dependsOn("flatJar")
+	dependsOn("shadowJar")
 	archiveFileName = "${project.name}-${project.version}.zip"
 	destinationDirectory = file("build/distributions")
-	from("build/distributions/flat") {
-		include("**/*")
+	from("build/libs") {
+		include("${project.name}-${project.version}-all.jar")
 	}
+	// Add assets here
+	// from("assets") {
+	// 	include("**/*")
+	// }
 }
